@@ -309,6 +309,66 @@ const MainListItems = (props) => {
         icon={<ContactPhoneOutlinedIcon />}
       />
 
+      {showCampaigns && (
+        <>
+          <ListItem
+            button
+            onClick={() => setOpenCampaignSubmenu((prev) => !prev)}
+          >
+            <ListItemIcon>
+              <EventAvailableIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={<Typography variant="body2">Campanhas</Typography>}
+            />
+            {openCampaignSubmenu ? (
+              <ExpandLessIcon />
+            ) : (
+              <ExpandMoreIcon />
+            )}
+          </ListItem>
+          <Collapse
+            style={{ paddingLeft: 15 }}
+            in={openCampaignSubmenu}
+            timeout="auto"
+            unmountOnExit
+          >
+            <List component="div" disablePadding>
+              <ListItem onClick={() => history.push("/campaigns")} button>
+                <ListItemIcon>
+                  <ListIcon />
+                </ListItemIcon>
+                <ListItemText 
+                    primary={<Typography variant="body2">Listagem</Typography>}
+                />
+              </ListItem>
+              <ListItem
+                onClick={() => history.push("/contact-lists")}
+                button
+              >
+                <ListItemIcon>
+                  <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText 
+                    primary={<Typography variant="body2">Lista de Contatos</Typography>}
+                />
+              </ListItem>
+              <ListItem
+                onClick={() => history.push("/campaigns-config")}
+                button
+              >
+                <ListItemIcon>
+                  <SettingsOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText 
+                    primary={<Typography variant="body2">Configurações</Typography>}
+                />
+              </ListItem>
+            </List>
+          </Collapse>
+        </>
+      )}
+
       <ListItemLink
         to="/schedules"
         primary={i18n.t("mainDrawer.listItems.schedules")}
@@ -356,59 +416,6 @@ const MainListItems = (props) => {
               {i18n.t("mainDrawer.listItems.administration")}
             </ListSubheader>
 			
-            {showCampaigns && (
-              <>
-                <ListItem
-                  button
-                  onClick={() => setOpenCampaignSubmenu((prev) => !prev)}
-                >
-                  <ListItemIcon>
-                    <EventAvailableIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={i18n.t("mainDrawer.listItems.campaigns")}
-                  />
-                  {openCampaignSubmenu ? (
-                    <ExpandLessIcon />
-                  ) : (
-                    <ExpandMoreIcon />
-                  )}
-                </ListItem>
-                <Collapse
-                  style={{ paddingLeft: 15 }}
-                  in={openCampaignSubmenu}
-                  timeout="auto"
-                  unmountOnExit
-                >
-                  <List component="div" disablePadding>
-                    <ListItem onClick={() => history.push("/campaigns")} button>
-                      <ListItemIcon>
-                        <ListIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Listagem" />
-                    </ListItem>
-                    <ListItem
-                      onClick={() => history.push("/contact-lists")}
-                      button
-                    >
-                      <ListItemIcon>
-                        <PeopleIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Listas de Contatos" />
-                    </ListItem>
-                    <ListItem
-                      onClick={() => history.push("/campaigns-config")}
-                      button
-                    >
-                      <ListItemIcon>
-                        <SettingsOutlinedIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Configurações" />
-                    </ListItem>
-                  </List>
-                </Collapse>
-              </>
-            )}
             {user.super && (
               <ListItemLink
                 to="/announcements"
