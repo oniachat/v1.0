@@ -20,6 +20,7 @@ const useAuth = () => {
       const token = localStorage.getItem("token");
       if (token) {
         config.headers["Authorization"] = `Bearer ${JSON.parse(token)}`;
+        config.headers["Access-Control-Allow-Origin"] = `*`;
         setIsAuth(true);
       }
       return config;

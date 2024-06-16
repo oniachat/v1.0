@@ -31,8 +31,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     overflowY: "auto",
     height: "100%",
-    ...theme.scrollbarStyles,
-    backgroundColor: theme.palette.chatlist, //DARK MODE PLW DESIGN//
+    backgroundImage: theme.mode === 'light' ? `url(${whatsBackground})` : `url(${whatsBackgroundDark})`, //DARK MODE PLW DESIGN//
   },
   inputArea: {
     position: "relative",
@@ -48,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 10px 5px",
     margin: "10px",
     position: "relative",
-    backgroundColor: "blue",
+    backgroundColor: "#ffffff",
     maxWidth: 300,
     borderRadius: 10,
     borderBottomLeftRadius: 0,
@@ -58,7 +57,8 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 10px 5px",
     margin: "10px 10px 10px auto",
     position: "relative",
-    backgroundColor: "green", //DARK MODE PLW DESIGN//
+    backgroundColor: "#dcf8c6",
+    boxShadow: "0 1px 1px #b3b3b3",
     textAlign: "right",
     maxWidth: 300,
     borderRadius: 10,
