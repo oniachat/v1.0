@@ -227,6 +227,9 @@ const TicketsListCustom = (props) => {
       }
 
       if (data.action === "update" && shouldUpdateTicket(data.ticket)) {
+        if (data.ticket.queue === null) {
+          return [];
+        }
         dispatch({
           type: "UPDATE_TICKET",
           payload: data.ticket,
@@ -253,6 +256,9 @@ const TicketsListCustom = (props) => {
       }
 
       if (data.action === "create" && shouldUpdateTicket(data.ticket)) {
+        if (data.ticket.queue === null) {
+          return [];
+        }  
         dispatch({
           type: "UPDATE_TICKET_UNREAD_MESSAGES",
           payload: data.ticket,
@@ -261,6 +267,9 @@ const TicketsListCustom = (props) => {
     });
 
     socket.on(`company-${companyId}-contact`, (data) => {
+        if (data.ticket.queue === null) {
+          return [];
+      }
       if (data.action === "update") {
         dispatch({
           type: "UPDATE_TICKET_CONTACT",
