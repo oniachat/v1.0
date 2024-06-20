@@ -15,6 +15,8 @@ import { AuthContext } from "../../context/Auth/AuthContext";
 import { useDate } from "../../hooks/useDate";
 import api from "../../services/api";
 import { green } from "@material-ui/core/colors";
+import whatsBackground from "../../assets/wa-background.png";
+import whatsBackgroundDark from "../../assets/wa-background-dark.png"; //DARK MODE PLW DESIGN//
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
