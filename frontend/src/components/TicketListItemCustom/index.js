@@ -243,24 +243,6 @@ const useStyles = makeStyles((theme) => ({
     history.push(`/tickets/`);
   };
 
-  const handleReopenTicket = async (id) => {
-    setLoading(true);
-    try {
-      await api.put(`/tickets/${id}`, {
-        status: "open",
-        userId: user?.id,
-        queueId: ticket?.queue?.id
-      });
-    } catch (err) {
-      setLoading(false);
-      toastError(err);
-    }
-    if (isMounted.current) {
-      setLoading(false);
-    }
-    history.push(`/tickets/${ticket.uuid}`);
-  };
-
     const handleAcepptTicket = async (id) => {
         setLoading(true);
         try {
@@ -523,20 +505,6 @@ const useStyles = makeStyles((theme) => ({
               onClick={e => handleCloseTicket(ticket.id)}
             >
               {i18n.t("ticketsList.buttons.closed")}
-            </ButtonWithSpinner>
-
-          )}
-          {(ticket.status === "closed") && (
-            <ButtonWithSpinner
-              //color="primary"
-              style={{ backgroundColor: 'red', color: 'white', padding: '0px', bottom: '0px', borderRadius: '0px', left: '8px', fontSize: '0.6rem' }}
-              variant="contained"
-              className={classes.acceptButton}
-              size="small"
-              loading={loading}
-              onClick={e => handleReopenTicket(ticket.id)}
-            >
-              {i18n.t("ticketsList.buttons.reopen")}
             </ButtonWithSpinner>
 
           )}
