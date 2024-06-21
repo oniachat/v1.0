@@ -81,11 +81,6 @@ const TicketActionButtonsCustom = ({ ticket }) => {
 		<div className={classes.actionButtons}>
 			{ticket.status === "open" && (
 				<>
-					<Tooltip title={i18n.t("messagesList.header.buttons.return")}>
-						<IconButton onClick={e => handleUpdateTicketStatus(e, "pending", null)}>
-							<UndoRoundedIcon />
-						</IconButton>
-					</Tooltip>
 					<ThemeProvider theme={customTheme}>
 						<Tooltip title={i18n.t("messagesList.header.buttons.resolve")}>
 							<IconButton onClick={e => handleUpdateTicketStatus(e, "closed", user?.id)} color="primary">
