@@ -252,7 +252,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   ackDoneAllIcon: {
-    color: green[500],
+    color: "#38B6FF",
     fontSize: 18,
     verticalAlign: "middle",
     marginLeft: 4,

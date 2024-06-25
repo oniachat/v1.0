@@ -390,12 +390,13 @@ const MainListItems = (props) => {
           </Badge>
         }
       />
-
+      {user.companyId != 2 && (
       <ListItemLink
         to="/helps"
         primary={i18n.t("mainDrawer.listItems.helps")}
         icon={<HelpOutlineIcon />}
       />
+      )}
 
       <Can
         role={user.profile}
