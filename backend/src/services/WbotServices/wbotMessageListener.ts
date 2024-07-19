@@ -19,7 +19,7 @@ import {
 import Contact from "../../models/Contact";
 import Ticket from "../../models/Ticket";
 import Message from "../../models/Message";
-
+import ListQueuesService from "../QueueService/ListQueuesService";
 import { getIO } from "../../libs/socket";
 import CreateMessageService from "../MessageServices/CreateMessageService";
 import { logger } from "../../utils/logger";
@@ -660,10 +660,10 @@ const handleOpenAi = async (
     limit: prompt.maxMessages
   });
 
-  const promptSystem = `Nas respostas utilize o nome ${sanitizeName(
+  const promptSystem = `Na primeira resposta utilize o nome ${sanitizeName(
     contact.name || "Amigo(a)"
   )} para identificar o cliente.\nSua resposta deve usar no máximo ${prompt.maxTokens
-    } tokens e cuide para não truncar o final.\nSempre que possível, mencione o nome dele para ser mais personalizado o atendimento e mais educado. Quando a resposta requer uma transferência para o setor de atendimento, comece sua resposta com 'Ação: Transferir para o setor de atendimento'.\n
+    } tokens e cuide para não truncar o final.\nMencione o nome dele somente na primeira mensagem.'.\n
   ${prompt.prompt}\n`;
 
   let messagesOpenAi: ChatCompletionRequestMessage[] = [];
@@ -696,10 +696,27 @@ const handleOpenAi = async (
 
     let response = chat.data.choices[0].message?.content;
 
-    if (response?.includes("Ação: Transferir para o setor de atendimento")) {
-      await transferQueue(prompt.queueId, ticket, contact);
+    const queues = await ListQueuesService({ companyId: ticket.companyId });
+
+    if (response?.includes(`setor`) && response?.includes(queues[0].name.toLowerCase())) {
+      await transferQueue(queues[0].id, ticket, contact);
       response = response
-        .replace("Ação: Transferir para o setor de atendimento", "")
+      .replace(`Transferindo para o setor ${queues[0].name}`, "")
+        .trim();
+    } else if (response?.includes(`setor`) && response?.includes(queues[1].name.toLowerCase())) {
+      await transferQueue(queues[1].id, ticket, contact);
+      response = response
+      .replace(`Transferindo para o setor ${queues[1].name}`, "")
+        .trim();
+    } else if (response?.includes(`setor`) && response?.includes(queues[2].name.toLowerCase())) {
+      await transferQueue(queues[2].id, ticket, contact);
+      response = response
+      .replace(`Transferindo para o setor ${queues[2].name}`, "")
+        .trim();
+    } else if (response?.includes(`setor`) && response?.includes(queues[3].name.toLowerCase())) {
+      await transferQueue(queues[3].id, ticket, contact);
+      response = response
+      .replace(`Transferindo para o setor ${queues[3].name}`, "")
         .trim();
     }
 
@@ -761,13 +778,31 @@ const handleOpenAi = async (
       temperature: prompt.temperature
     });
     let response = chat.data.choices[0].message?.content;
+    
+    const queues = await ListQueuesService({ companyId: ticket.companyId });
 
-    if (response?.includes("Ação: Transferir para o setor de atendimento")) {
-      await transferQueue(prompt.queueId, ticket, contact);
+    if (response?.includes(`setor`) && response?.includes(queues[0].name.toLowerCase())) {
+      await transferQueue(queues[0].id, ticket, contact);
       response = response
-        .replace("Ação: Transferir para o setor de atendimento", "")
+      .replace(`Transferindo para o setor ${queues[0].name}`, "")
+        .trim();
+    } else if (response?.includes(`setor`) && response?.includes(queues[1].name.toLowerCase())) {
+      await transferQueue(queues[1].id, ticket, contact);
+      response = response
+      .replace(`Transferindo para o setor ${queues[1].name}`, "")
+        .trim();
+    } else if (response?.includes(`setor`) && response?.includes(queues[2].name.toLowerCase())) {
+      await transferQueue(queues[2].id, ticket, contact);
+      response = response
+      .replace(`Transferindo para o setor ${queues[2].name}`, "")
+        .trim();
+    } else if (response?.includes(`setor`) && response?.includes(queues[3].name.toLowerCase())) {
+      await transferQueue(queues[3].id, ticket, contact);
+      response = response
+      .replace(`Transferindo para o setor ${queues[3].name}`, "")
         .trim();
     }
+    
     if (prompt.voice === "texto") {
       const sentMessage = await wbot.sendMessage(msg.key.remoteJid!, {
         text: response!
