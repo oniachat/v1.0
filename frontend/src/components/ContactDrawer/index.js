@@ -11,6 +11,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import CreateIcon from '@material-ui/icons/Create';
+import ModalImageCors from "../ModalImageCors";
 
 import { i18n } from "../../translate/i18n";
 
@@ -125,12 +126,15 @@ const ContactDrawer = ({ open, handleDrawerClose, contact, ticket, loading }) =>
 				) : (
 					<div className={classes.content}>
 						<Paper square variant="outlined" className={classes.contactHeader}>
-							<CardHeader
-								onClick={() => {}}
+							<ModalImageCors
 								style={{ cursor: "pointer", width: '100%' }}
 								titleTypographyProps={{ noWrap: true }}
 								subheaderTypographyProps={{ noWrap: true }}
 								avatar={<Avatar src={contact.profilePicUrl} alt="contact_image" style={{ width: 60, height: 60 }} />}
+								imageUrl={contact.profilePicUrl}
+							></ModalImageCors>
+							<CardHeader
+								onClick={() => {}}
 								title={
 									<>
 										<Typography onClick={() => setOpenForm(true)}>
