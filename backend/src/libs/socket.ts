@@ -18,7 +18,7 @@ export const initIO = (httpServer: Server): SocketIO => {
     const { userId } = socket.handshake.query;
 
     if (userId && userId !== "undefined" && userId !== "null") {
-      const user = await User.findByPk(userId);
+      const user = await User.findByPk(userId as string);
       if (user) {
         user.online = true;
         await user.save();
